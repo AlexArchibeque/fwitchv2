@@ -31,3 +31,4 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 Common commands:
 
 npx prisma db push -> Push DB to railway app and/or .env set url
+npx prisma studio -> Starts server instance for testing / adding data
