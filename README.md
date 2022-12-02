@@ -27,8 +27,8 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
 
-
 Common commands:
 
-npx prisma db push -> Push DB to railway app and/or .env set url
-npx prisma studio -> Starts server instance for testing / adding data
+npx prisma migrate dev || npx prisma db push
+-> Push DB to railway app and/or .env set url
+npx prisma studio -> Starts server instance for testing / adding
