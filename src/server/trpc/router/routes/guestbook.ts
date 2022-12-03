@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { router, protectedProcedure, publicProcedure } from "../trpc";
+import { router, protectedProcedure, publicProcedure } from "../../trpc";
 
 export const guestBookRouter = router({
   getAll: publicProcedure.query(async ({ ctx }) => {
