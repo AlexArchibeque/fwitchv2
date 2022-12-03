@@ -4,24 +4,30 @@ import { useSession } from "next-auth/react";
 
 export const PostMessageForm = () => {
   const [message, setMessage] = React.useState("");
+  const [error, setError] = React.useState("");
   const utils = trpc.useContext();
   const postMessage = trpc.guestbook.postMessage.useMutation({
     onMutate: async () => {
-      await utils.guestbook.getAll.cancel();
-      const optimisticUpdate = utils.guestbook.getAll.getData();
-      if (optimisticUpdate) {
-        utils.guestbook.getAll.setData(undefined, optimisticUpdate);
+      if (!postMessage.error) {
+        await utils.guestbook.getAll.cancel();
+        const optimisticUpdate = utils.guestbook.getAll.getData();
+        if (optimisticUpdate) {
+          utils.guestbook.getAll.setData(undefined, optimisticUpdate);
+        }
       }
     },
     onSettled: () => {
       utils.guestbook.getAll.invalidate();
+    },
+    onError: (error) => {
+      setError(error.message);
     },
   });
   const { data: session } = useSession();
 
   return (
     <form
-      className="flex gap-2"
+      className="flex flex-col gap-2"
       onSubmit={(event) => {
         event.preventDefault();
         postMessage.mutate({
@@ -46,6 +52,11 @@ export const PostMessageForm = () => {
       >
         Submit
       </button>
+      {postMessage.error && (
+        <div className="text-md rounded-md bg-gray-800 px-2 py-2 text-red-200">
+          {postMessage.error.message}
+        </div>
+      )}
     </form>
   );
 };

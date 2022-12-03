@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { router, protectedProcedure, publicProcedure } from "../../trpc";
 
@@ -27,6 +28,16 @@ export const guestBookRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       try {
+        const messageLength = input.message.length;
+        if (messageLength < 2 || messageLength > 100) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message:
+              messageLength < 2
+                ? "Message is too small"
+                : "Message is too large",
+          });
+        }
         await ctx.prisma.guestbook.create({
           data: {
             name: input.name,
@@ -35,6 +46,7 @@ export const guestBookRouter = router({
         });
       } catch (error) {
         console.log(error);
+        throw error;
       }
     }),
 });
