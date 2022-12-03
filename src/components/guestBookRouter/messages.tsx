@@ -1,4 +1,4 @@
-import { trpc } from "../utils/trpc";
+import { trpc } from "../../utils/trpc";
 
 export const Messages = () => {
   const { data: messages, isLoading } = trpc.guestbook.getAll.useQuery();
