@@ -24,6 +24,7 @@ export const PostMessageForm = () => {
     },
   });
   const { data: session } = useSession();
+  const errorBorder = postMessage.error ? "border-red-800" : "border-zinc-800";
 
   return (
     <form
@@ -44,7 +45,7 @@ export const PostMessageForm = () => {
         maxLength={100}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Your message..."
-        className="rounded-md border-2 border-zinc-800 bg-neutral-900 px-4 py-2 focus:outline-none"
+        className={`rounded-md border-2 bg-neutral-900 py-2 px-4 focus:outline-none ${errorBorder}`}
       />
       <button
         type="submit"
