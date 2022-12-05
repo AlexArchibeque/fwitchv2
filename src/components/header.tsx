@@ -1,9 +1,27 @@
+import React from "react";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { LoginModal } from "./loginModal/loginModal";
 import { type Session } from "next-auth";
+
+const defaultModalOptions = {
+  isOpen: false,
+  starterPage: "login",
+};
+
+export interface ModalProps {
+  isOpen: boolean;
+  starterPage: string;
+}
 
 export const Header = () => {
   const { data: session, status } = useSession();
+  const [loginModalOpen, setLoginModalOpen] =
+    React.useState<ModalProps>(defaultModalOptions);
+
+  const setLoginModal = (page: string) => {
+    setLoginModalOpen({ starterPage: page, isOpen: true });
+  };
 
   return (
     <ul className="flex flex-row content-center items-center justify-between gap-2 border-b border-black bg-stone-900 p-4">
@@ -22,9 +40,9 @@ export const Header = () => {
       <div className="flex rounded-md">
         <input
           placeholder="Search"
-          className="rounded-l-md border-2 border-transparent bg-stone-600 p-2 text-white placeholder:font-medium placeholder:text-slate-300 hover:border-slate-400 focus:outline-none"
+          className="rounded-l-md border-2 border-transparent bg-stone-600 p-2 text-white placeholder:font-medium placeholder:text-slate-400 hover:border-slate-400 hover:transition hover:ease-in-out focus:border-indigo-900 focus:bg-black focus:outline-none"
         />
-        <button className="rounded-r-md border-l border-black bg-stone-700 p-2">
+        <button className="rounded-r-md border-l border-black bg-stone-700 p-2 hover:bg-stone-600">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -44,7 +62,15 @@ export const Header = () => {
 
       {/* Section 3 (User info) */}
       <div className="flex justify-between gap-2">
-        {status !== "loading" && <LoginSection loginSess={session} />}
+        {status !== "loading" && (
+          <LoginSection loginSess={session} setLoginModal={setLoginModal} />
+        )}
+        {loginModalOpen.isOpen && (
+          <LoginModal
+            page={loginModalOpen.starterPage}
+            setOpen={setLoginModalOpen}
+          />
+        )}
       </div>
     </ul>
   );
@@ -52,9 +78,10 @@ export const Header = () => {
 
 interface LoginProps {
   loginSess: Session | null;
+  setLoginModal: (page: string) => void;
 }
 
-const LoginSection = ({ loginSess }: LoginProps) => {
+const LoginSection = ({ loginSess, setLoginModal }: LoginProps) => {
   return loginSess ? (
     <>
       <li>
@@ -100,10 +127,10 @@ const LoginSection = ({ loginSess }: LoginProps) => {
   ) : (
     <>
       <li>
-        <button onClick={() => signIn("discord")}>Login</button>
+        <button onClick={() => setLoginModal("login")}>Login</button>
       </li>
       <li>
-        <button>Sign Up</button>
+        <button onClick={() => setLoginModal("register")}>Sign Up</button>
       </li>
     </>
   );
