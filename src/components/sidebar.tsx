@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import React from "react";
 
 export const Sidebar: NextPage = () => {
-  const [isOpen, setIsOpen] = React.useState(true);
+  const [isOpen, setIsOpen] = React.useState<boolean>(true);
 
   const width = isOpen ? "min-w-[240px]" : "min-w-[50px]";
 

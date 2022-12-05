@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 
 export const PostMessageForm = () => {
   const [message, setMessage] = React.useState("");
-  const [error, setError] = React.useState("");
+  const [error, setError] = React.useState<string>("");
   const utils = trpc.useContext();
   const postMessage = trpc.guestbook.postMessage.useMutation({
     onMutate: async () => {
@@ -54,8 +54,8 @@ export const PostMessageForm = () => {
         Submit
       </button>
       {postMessage.error && (
-        <div className="text-md mb-2 rounded-md bg-gray-800 px-2 py-2 text-red-200">
-          {postMessage.error.message}
+        <div className="text-md mb-2 rounded-md bg-gray-800 px-2 py-2 text-red-400">
+          {error}
         </div>
       )}
     </form>

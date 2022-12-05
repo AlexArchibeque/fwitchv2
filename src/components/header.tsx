@@ -20,8 +20,11 @@ export const Header = () => {
 
       {/* Section 2 (Search bar) */}
       <div className="flex rounded-md">
-        <input placeholder="Search" className="rounded-l-md bg-stone-600 p-2" />
-        <button className="rounded-r-md bg-stone-700 p-2">
+        <input
+          placeholder="Search"
+          className="rounded-l-md border-2 border-transparent bg-stone-600 p-2 text-white placeholder:font-medium placeholder:text-slate-300 hover:border-slate-400 focus:outline-none"
+        />
+        <button className="rounded-r-md border-l border-black bg-stone-700 p-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
