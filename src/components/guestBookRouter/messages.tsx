@@ -6,10 +6,13 @@ export const Messages = () => {
   return isLoading ? (
     <div> Fetching messages... </div>
   ) : (
-    <div>
+    <div className="flex gap-2">
       {messages?.map((msg, idx) => {
         return (
-          <div key={`msg-${idx}`}>
+          <div
+            className="align-center flex flex-col rounded-md border border-black bg-stone-800 p-4"
+            key={`msg-${idx}`}
+          >
             <p>{msg.message}</p>
             <span>- {msg.name}</span>
           </div>

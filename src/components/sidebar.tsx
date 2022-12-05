@@ -4,7 +4,7 @@ import React from "react";
 export const Sidebar: NextPage = () => {
   const [isOpen, setIsOpen] = React.useState(true);
 
-  const width = isOpen ? "w-60" : "w-12";
+  const width = isOpen ? "min-w-[240px]" : "min-w-[50px]";
 
   const setSidebarStatus = () => {
     setIsOpen(!isOpen);
@@ -12,7 +12,7 @@ export const Sidebar: NextPage = () => {
 
   return (
     <div
-      className={`border-r border-black ${width} flex min-h-screen flex-col bg-stone-800 p-2`}
+      className={`border-r border-black ${width} flex h-screen flex-col bg-stone-800 p-2`}
     >
       <div className="flex flex-row items-center justify-between">
         {isOpen && <p>For You</p>}

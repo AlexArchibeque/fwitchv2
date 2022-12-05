@@ -49,12 +49,12 @@ export const PostMessageForm = () => {
       />
       <button
         type="submit"
-        className="rounded-md border-2 border-zinc-800 p-2 focus:outline-none"
+        className="mb-2 rounded-md border-2 border-zinc-800 p-2 focus:outline-none"
       >
         Submit
       </button>
       {postMessage.error && (
-        <div className="text-md rounded-md bg-gray-800 px-2 py-2 text-red-200">
+        <div className="text-md mb-2 rounded-md bg-gray-800 px-2 py-2 text-red-200">
           {postMessage.error.message}
         </div>
       )}

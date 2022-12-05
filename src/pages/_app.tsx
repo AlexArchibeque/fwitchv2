@@ -1,5 +1,6 @@
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
+import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
@@ -15,10 +16,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <Head>
+        <title>Fwitch V2</title>
+      </Head>
       <Header />
       <div className="flex justify-start">
         <Sidebar />
-        <div className="flex flex-col">
+        <div className="flex w-screen flex-col">
           <Component {...pageProps} />
           <Footer />
         </div>
