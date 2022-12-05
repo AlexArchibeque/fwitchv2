@@ -1,34 +1,12 @@
 import { type NextPage } from "next";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { Messages } from "../components/guestBookRouter/messages";
-import { PostMessageForm } from "../components/guestBookRouter/postMessageForm";
+import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
-    return <main className="flex flex-col items-center pt-4">Loading...</main>;
-  }
-
   return (
     <main className="flex flex-col items-center">
-      <h1 className="pt-4 text-3xl">Guestbook</h1>
-      <div className="pt-10">
-        {session ? (
-          <>
-            <div>Hi {`${session.user?.name}`}</div>
-            <button onClick={() => signOut()}>Logout</button>
-            <PostMessageForm />
-          </>
-        ) : (
-          <button onClick={() => signIn("discord")}>
-            Sign in with discord
-          </button>
-        )}
-      </div>
-      <div>
-        <Messages />
-      </div>
+      {status === "loading" ? "Loading ..." : "In the main page"}
     </main>
   );
 };
