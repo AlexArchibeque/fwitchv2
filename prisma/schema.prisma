@@ -47,6 +47,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  password      String?
   accounts      Account[]
   sessions      Session[]
 }
@@ -62,8 +63,8 @@ model VerificationToken {
 // End of Next Auth
 
 model Guestbook {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    name      String
-    message   String   @db.VarChar(100)
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  name      String
+  message   String   @db.VarChar(100)
 }
