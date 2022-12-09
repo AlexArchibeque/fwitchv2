@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { router, publicProcedure } from "../../trpc";
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
 export const registrationRouter = router({
   registerAccount: publicProcedure

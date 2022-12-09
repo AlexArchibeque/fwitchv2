@@ -6,8 +6,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
-
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
@@ -46,8 +45,8 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        if (user) {
-          const savedPassword = user.password;
+        if (user && plainPassword) {
+          const savedPassword = user.password || "";
           const isCorrectPassword = bcrypt.compareSync(
             plainPassword,
             savedPassword
