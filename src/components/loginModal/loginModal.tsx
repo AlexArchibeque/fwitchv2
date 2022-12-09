@@ -36,8 +36,6 @@ export const LoginModal = ({
     },
   });
 
-  console.log("REGISTRATION ERRORS", registrationErrors);
-
   const Header = () => {
     return currPage === "login" ? (
       <div className="flex h-12 min-w-full items-center justify-center">
