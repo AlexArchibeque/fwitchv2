@@ -5,6 +5,23 @@ import { signIn } from "next-auth/react";
 import { ModalProps } from "../header";
 import { trpc } from "../../utils/trpc";
 
+interface LoginErrors {
+  username?: string;
+  password?: string;
+}
+
+const LOGIN_ERRORS: { [key: string]: LoginErrors } = Object.freeze({
+  user_missing: {
+    username: "Username is not found",
+  },
+  password_incorrect: {
+    password: "Password is incorrect",
+  },
+  password_missing: {
+    password: "Please insert a password",
+  },
+});
+
 export const LoginModal = ({
   page,
   setOpen,
@@ -14,9 +31,11 @@ export const LoginModal = ({
 }) => {
   const [currPage, setCurrPage] = React.useState<string>(page);
 
-  const [email, setEmail] = React.useState<string>("");
+  const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
-  const [loginErrors, setLoginErrors] = React.useState("");
+  const [loginErrors, setLoginErrors] = React.useState<LoginErrors | null>(
+    null
+  );
 
   const [signupUsername, setSignupUsername] = React.useState<string>("");
   const [signupPassword, setSignupPassword] = React.useState<string>("");
@@ -25,8 +44,8 @@ export const LoginModal = ({
 
   const register = trpc.register.registerAccount.useMutation({
     onSuccess: async () => {
-      await signIn("email-login", {
-        email: signupEmail,
+      await signIn("cred-login", {
+        username: signupUsername,
         password: signupPassword,
       });
     },
@@ -35,6 +54,24 @@ export const LoginModal = ({
       setRegistrationErrors(error.message);
     },
   });
+
+  const handleSignOn = async () => {
+    await signIn("cred-login", {
+      redirect: false,
+      username,
+      password,
+    }).then((info) => {
+      if (info?.ok) {
+        setOpen({ starterPage: "login", isOpen: false });
+      } else {
+        if (info && typeof info.error === "string") {
+          const errors = LOGIN_ERRORS[info.error];
+          setLoginErrors(errors || null);
+        }
+      }
+    });
+    return;
+  };
 
   const Header = () => {
     return currPage === "login" ? (
@@ -48,30 +85,42 @@ export const LoginModal = ({
     );
   };
 
+  const errorBorder = "border-red-800 bg-red-900";
+
   const Content = () => {
     return currPage === "login" ? (
-      <div className="flex min-h-max flex-col justify-between gap-2 py-4">
+      <div className="flex min-h-max flex-col justify-between py-2">
         <div className="flex w-full flex-col">
           <p className="py-1">UserName</p>
           <input
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
             type="text"
-            className="rounded-md bg-neutral-900 p-1"
+            className={`rounded-md bg-stone-600 p-2 ${
+              loginErrors?.username ? errorBorder : ""
+            }`}
             placeholder="username"
           />
-          <div className="min-h-[40px] py-1"></div>
+          {/* Username Errors */}
+          <div className="min-h-[40px] py-1 text-red-400">
+            {loginErrors?.username}
+          </div>
         </div>
         <div className="flex w-full flex-col">
-          <p className="py-1">Password</p>
+          <p className="pb-2">Password</p>
           <input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             type="text"
-            className="rounded-md bg-neutral-900 p-1"
+            className={`rounded-md bg-stone-600 p-2 ${
+              loginErrors?.password ? errorBorder : ""
+            }`}
             placeholder="password"
           />
-          <div className="min-h-[40px] py-1"></div>
+          {/* Password Errors */}
+          <div className="min-h-[40px] py-1 text-red-400">
+            {loginErrors?.password}
+          </div>
         </div>
 
         <div className="flex w-full flex-col pb-1">
@@ -83,9 +132,7 @@ export const LoginModal = ({
           </button>
         </div>
         <button
-          onClick={() =>
-            signIn("email-login", { redirect: false, email, password })
-          }
+          onClick={async () => await handleSignOn()}
           className="rounded-md bg-indigo-500 py-2 hover:bg-indigo-600"
         >
           Log In
@@ -100,7 +147,7 @@ export const LoginModal = ({
               onChange={(e) => setSignupUsername(e.target.value)}
               value={signupUsername}
               type="text"
-              className="rounded-md bg-neutral-900 p-1"
+              className="rounded-md bg-stone-600 p-2"
               placeholder="username"
             />
             <div className="min-h-[40px] py-1"></div>
@@ -111,7 +158,7 @@ export const LoginModal = ({
               onChange={(e) => setSignupPassword(e.target.value)}
               value={signupPassword}
               type="text"
-              className="rounded-md bg-neutral-900 p-1"
+              className="rounded-md bg-stone-600 p-2"
               placeholder="password"
             />
             <div className="min-h-[40px] py-1"></div>
@@ -122,7 +169,7 @@ export const LoginModal = ({
               onChange={(e) => setSignupEmail(e.target.value)}
               value={signupEmail}
               type="text"
-              className="rounded-md bg-neutral-900 p-1"
+              className="rounded-md bg-stone-600 p-2"
               placeholder="email"
             />
             <div className="min-h-[40px] py-1"></div>

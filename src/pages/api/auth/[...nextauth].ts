@@ -11,11 +11,18 @@ import bcrypt from "bcrypt";
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
   callbacks: {
-    async session({ session, token }) {
-      if (session.user && token.sub) {
-        session.user.id = token.sub;
+    async session({ session, user }) {
+      if (session.user) {
+        session.user.id = user?.id;
       }
       return session;
+    },
+    async jwt({ token, account }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = account.providerAccountId;
+      }
+      return token;
     },
   },
   session: {
@@ -29,22 +36,24 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
     CredentialsProvider({
-      id: "email-login",
+      id: "cred-login",
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
+        username: { label: "Username", type: "username" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         // Add logic here to look up the user from the credentials supplied
-        const email = credentials?.email;
+        const username = credentials?.username;
         const plainPassword = credentials?.password;
         const user = await prisma.user.findUnique({
           where: {
-            email: email,
+            userName: username,
           },
         });
-
+        if (!user) {
+          throw new Error("user_missing");
+        }
         if (user && plainPassword) {
           const savedPassword = user.password || "";
           const isCorrectPassword = bcrypt.compareSync(
@@ -52,12 +61,12 @@ export const authOptions: NextAuthOptions = {
             savedPassword
           );
           if (isCorrectPassword) return user;
-          return null;
+          throw new Error("password_incorrect");
           // Any object returned will be saved in `user` property of the JWT
           // return user;
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
-          return null;
+          throw new Error("password_missing");
           // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       },

@@ -18,6 +18,7 @@ export const registrationRouter = router({
         const user = await ctx.prisma.user.create({
           data: {
             name: input.username,
+            userName: input.username,
             email: input.email,
             password: hashedPassword,
           },
