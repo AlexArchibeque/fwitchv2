@@ -12,7 +12,7 @@ export const Sidebar: NextPage = () => {
 
   return (
     <div
-      className={`border-r border-black ${width} flex h-screen flex-col bg-stone-800 p-2`}
+      className={`border-r border-black ${width} z-[100] flex h-screen flex-col bg-stone-800 p-2`}
     >
       <div className="flex flex-row items-center justify-between">
         {isOpen && <p>For You</p>}

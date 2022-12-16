@@ -4,7 +4,6 @@ import { RotatingSection } from "../components/mainPageRotatingSection/rotatingS
 const Home: NextPage = () => {
   return (
     <main className="flex flex-col items-center">
-      In the main page
       <RotatingSection />
       <div>Live channels we think you`ll like</div>
       <div>Categories we think you`ll like</div>

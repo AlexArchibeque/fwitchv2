@@ -19,6 +19,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <Head>
         <title>Fwitch V2</title>
       </Head>
+      {/* For Modals */}
       <div id="portal" />
       <Header />
       <div className="flex justify-start">
