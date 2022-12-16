@@ -6,7 +6,7 @@ type ArrayInfo = {
   reversed: boolean;
 };
 
-const backLeft: string = "z-0 left-20 h-[210px] ";
+const backLeft: string = "z-0 left-20 h-[210px]";
 const midLeft: string = "z-10 left-48 h-[255px]";
 const middle: string = "z-20";
 const midRight: string = "z-10 right-48 h-[255px]";
@@ -22,47 +22,54 @@ const defaultStylesInfo: ArrayInfo[] = [
 
 type VideoInfo = {
   name: string;
+  id: number;
 };
 
 const exampleInfo: Array<VideoInfo> = [
-  { name: "Hello!" },
-  { name: "nopers" },
-  { name: "nsl;akdf;o1" },
-  { name: "There we go" },
-  { name: "Larry" },
+  { name: "Hello!", id: 0 },
+  { name: "nopers", id: 1 },
+  { name: "nsl;akdf;o1", id: 2 },
+  { name: "There we go", id: 3 },
+  { name: "Larry", id: 4 },
 ];
 
 export const RotatingSection = () => {
   const [arrayOfVids, setArrayOfVids] =
     React.useState<Array<VideoInfo>>(exampleInfo);
 
+  const [update, setUpdate] = React.useState<boolean>(false);
+
   const handleArrowClick = (direction: string) => {
-    let finalArray: Array<VideoInfo> = [];
+    // let finalArray: Array<VideoInfo> = [];
 
     if (direction === "left") {
       for (let i = arrayOfVids.length; i >= 0; i--) {
         const currVid = arrayOfVids[i];
         if (!currVid) continue;
-        if (i === 0) {
-          finalArray[4] = currVid;
+        const currId = currVid.id;
+        if (currId === 0) {
+          currVid.id = 4;
         } else {
-          finalArray[i - 1] = currVid;
+          currVid.id = currId - 1;
         }
       }
     } else {
       for (let i = 0; i < arrayOfVids.length; i++) {
         const currVid = arrayOfVids[i];
         if (!currVid) continue;
-        if (i === 4) {
-          finalArray[0] = currVid;
+        const currId = currVid.id;
+        if (currId === 4) {
+          currVid.id = 0;
         } else {
-          finalArray[i + 1] = currVid;
+          currVid.id = (currId + 1) % 5;
         }
       }
     }
 
-    setArrayOfVids(finalArray);
+    setUpdate(!update);
   };
+
+  console.log(arrayOfVids);
 
   return (
     <div className="mt-[25px] flex min-w-full items-center ">
@@ -77,13 +84,13 @@ export const RotatingSection = () => {
         </button>
         <div className="absolute flex min-h-full min-w-full items-center justify-center bg-indigo-500">
           {arrayOfVids.map((info, idx) => {
-            const stylesInfo = defaultStylesInfo[idx];
-            const currentVideo = arrayOfVids[idx];
-            if (stylesInfo != undefined && currentVideo != null) {
+            const id = info.id;
+            const stylesInfo = defaultStylesInfo[id];
+            if (stylesInfo != undefined && info != null) {
               return (
                 <IndividualSection
-                  key={`${idx}+${currentVideo.name}`}
-                  name={currentVideo.name}
+                  key={`${idx}+${info.name}`}
+                  name={info.name}
                   reversed={stylesInfo.reversed}
                   classes={stylesInfo.cssStyles}
                 />

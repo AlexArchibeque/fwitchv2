@@ -29,7 +29,7 @@ export const IndividualSection = ({
 
   return (
     <div
-      className={`${classes} absolute flex h-[300px] w-4 min-w-[750px] flex-row rounded-md bg-indigo-800 transition-all duration-500 ease-in`}
+      className={`${classes} absolute flex h-[300px] w-4 min-w-[750px] flex-row rounded-md bg-indigo-800 transition-all duration-500 ease-in-out`}
     >
       {reversed ? (
         <>
