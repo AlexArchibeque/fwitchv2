@@ -6,11 +6,11 @@ type ArrayInfo = {
   reversed: boolean;
 };
 
-const backLeft: string = "z-0 left-20 h-[210px]";
-const midLeft: string = "z-10 left-48 h-[255px]";
-const middle: string = "z-20";
-const midRight: string = "z-10 right-48 h-[255px]";
-const backRight: string = "z-0 right-20 h-[210px]";
+const backLeft = "z-0 left-20 h-[210px]";
+const midLeft = "z-10 left-48 h-[255px]";
+const middle = "z-20";
+const midRight = "z-10 right-48 h-[255px]";
+const backRight = "z-0 right-20 h-[210px]";
 
 const defaultStylesInfo: ArrayInfo[] = [
   { cssStyles: backLeft, reversed: false },
