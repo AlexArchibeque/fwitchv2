@@ -1,11 +1,11 @@
 import Link from "next/link";
 export const IndividualSection = ({
   classes,
-  reversed,
+  hiddenInfo,
   name,
 }: {
   classes: string;
-  reversed: boolean;
+  hiddenInfo: boolean;
   name: string;
 }) => {
   const InfoSection = () => {
@@ -27,14 +27,14 @@ export const IndividualSection = ({
     );
   };
 
+  // h-[300px] w-[750px]
   return (
     <div
-      className={`${classes} absolute flex h-[300px] w-4 min-w-[750px] flex-row rounded-md bg-indigo-800 transition-all duration-500 ease-in-out`}
+      className={`${classes} absolute flex h-[300px] min-w-[750px]  flex-row rounded-md bg-indigo-800`}
     >
-      {reversed ? (
+      {hiddenInfo ? (
         <>
-          {InfoSection()}
-          <video className="h-100 w-[550px] rounded-r-md" controls />
+          <video className="h-100 w-full rounded-md" controls />
         </>
       ) : (
         <>

@@ -3,22 +3,8 @@ import { IndividualSection } from "./individualSection";
 
 type ArrayInfo = {
   cssStyles: string;
-  reversed: boolean;
+  hiddenInfo: boolean;
 };
-
-const backLeft = "z-0 left-20 h-[210px]";
-const midLeft = "z-10 left-48 h-[255px]";
-const middle = "z-20";
-const midRight = "z-10 right-48 h-[255px]";
-const backRight = "z-0 right-20 h-[210px]";
-
-const defaultStylesInfo: ArrayInfo[] = [
-  { cssStyles: backLeft, reversed: false },
-  { cssStyles: midLeft, reversed: false },
-  { cssStyles: middle, reversed: false },
-  { cssStyles: midRight, reversed: true },
-  { cssStyles: backRight, reversed: true },
-];
 
 type VideoInfo = {
   name: string;
@@ -26,11 +12,33 @@ type VideoInfo = {
 };
 
 const exampleInfo: Array<VideoInfo> = [
-  { name: "Hello!", id: 0 },
-  { name: "nopers", id: 1 },
-  { name: "nsl;akdf;o1", id: 2 },
-  { name: "There we go", id: 3 },
-  { name: "Larry", id: 4 },
+  { name: "Nope!", id: 0 },
+  { name: "Hello!", id: 1 },
+  { name: "nopers", id: 2 },
+  { name: "nsl;akdf;o1", id: 3 },
+  { name: "There we go", id: 4 },
+  { name: "Larry", id: 5 },
+  { name: "thereWego!", id: 6 },
+];
+
+let hiddenLeft =
+  " -translate-x-[350px] h-[150px] transition-all ease-in duration-[0.5s] animate-fade opacity-0";
+let backLeft = `z-10 -translate-x-[250px] h-[210px]  transition-all ease-in duration-[0.5s] animate-fade opacity-100`;
+let midLeft = `z-20 -translate-x-[150px] h-[255px] w-[650px] transition-all ease-in  duration-[0.5s]`;
+let middle = "z-30 transition-all h-[300px] ease-in duration-[0.5s]";
+let midRight = `z-20 translate-x-[150px] h-[255px] w-[650px] transition-all ease-out duration-[0.5s]`;
+let backRight = `z-10 translate-x-[250px] h-[210px] transition-all ease-out duration-[0.5s] animate-fade opacity-100`;
+let hiddenRight =
+  " translate-x-[350px] h-[150px] transition-all ease-in duration-[0.5s] animate-fade opacity-0";
+
+const defaultStylesInfo: ArrayInfo[] = [
+  { cssStyles: hiddenLeft, hiddenInfo: true },
+  { cssStyles: backLeft, hiddenInfo: true },
+  { cssStyles: midLeft, hiddenInfo: true },
+  { cssStyles: middle, hiddenInfo: false },
+  { cssStyles: midRight, hiddenInfo: true },
+  { cssStyles: backRight, hiddenInfo: true },
+  { cssStyles: hiddenRight, hiddenInfo: true },
 ];
 
 export const RotatingSection = () => {
@@ -40,15 +48,13 @@ export const RotatingSection = () => {
   const [update, setUpdate] = React.useState<boolean>(false);
 
   const handleArrowClick = (direction: string) => {
-    // let finalArray: Array<VideoInfo> = [];
-
     if (direction === "left") {
-      for (let i = arrayOfVids.length; i >= 0; i--) {
+      for (let i = arrayOfVids.length; i >= -1; i--) {
         const currVid = arrayOfVids[i];
         if (!currVid) continue;
         const currId = currVid.id;
         if (currId === 0) {
-          currVid.id = 4;
+          currVid.id = 6;
         } else {
           currVid.id = currId - 1;
         }
@@ -58,10 +64,10 @@ export const RotatingSection = () => {
         const currVid = arrayOfVids[i];
         if (!currVid) continue;
         const currId = currVid.id;
-        if (currId === 4) {
+        if (currId === 6) {
           currVid.id = 0;
         } else {
-          currVid.id = (currId + 1) % 5;
+          currVid.id = (currId + 1) % 7;
         }
       }
     }
@@ -69,10 +75,11 @@ export const RotatingSection = () => {
     setUpdate(!update);
   };
 
-  console.log(arrayOfVids);
-
   return (
-    <div className="mt-[25px] flex min-w-full items-center ">
+    <div
+      className="mt-[25px] flex min-w-full items-center"
+      id="carousel-container"
+    >
       <div className="relative flex min-h-[450px] min-w-full items-center justify-between bg-red-700">
         <button
           onClick={() => {
@@ -80,9 +87,9 @@ export const RotatingSection = () => {
           }}
           className="z-40 h-10 bg-slate-700"
         >
-          LEFT ARROW
+          {`${"<"}`}
         </button>
-        <div className="absolute flex min-h-full min-w-full items-center justify-center bg-indigo-500">
+        <div className="absolute flex min-h-full min-w-full items-center justify-center overflow-x-clip bg-indigo-500">
           {arrayOfVids.map((info, idx) => {
             const id = info.id;
             const stylesInfo = defaultStylesInfo[id];
@@ -91,7 +98,7 @@ export const RotatingSection = () => {
                 <IndividualSection
                   key={`${idx}+${info.name}`}
                   name={info.name}
-                  reversed={stylesInfo.reversed}
+                  hiddenInfo={stylesInfo.hiddenInfo}
                   classes={stylesInfo.cssStyles}
                 />
               );
@@ -105,7 +112,7 @@ export const RotatingSection = () => {
           }}
           className="z-40 h-10 bg-slate-700"
         >
-          RIGHT ARROW
+          {`${">"}`}
         </button>
       </div>
     </div>
