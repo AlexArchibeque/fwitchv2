@@ -4,7 +4,7 @@ import { Messages } from "../../components/guestBookRouter/messages";
 import { PostMessageForm } from "../../components/guestBookRouter/postMessageForm";
 
 const GuestBook: NextPage = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   return (
     <>

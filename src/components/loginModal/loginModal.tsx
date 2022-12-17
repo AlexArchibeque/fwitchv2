@@ -194,40 +194,45 @@ export const LoginModal = ({
   const selectedClass =
     "font-bold text-indigo-800 border-b-2 border-indigo-700";
 
-  return ReactDom.createPortal(
-    <>
-      <div className="absolute top-0 left-0 z-[250] flex h-full w-full items-center justify-center bg-slate-400/40">
-        <div className=" flex items-start gap-2">
-          {/* Main Content */}
-          <div className="z-10 min-h-[350px] min-w-[400px] rounded-md border border-black bg-stone-900 px-2 py-4">
-            {Header()}
-            <div className="flex gap-2 border-b border-slate-600">
+  const portal = document.getElementById("portal");
+  return portal
+    ? ReactDom.createPortal(
+        <>
+          <div className="absolute top-0 left-0 z-[250] flex h-full w-full items-center justify-center bg-slate-400/40">
+            <div className=" flex items-start gap-2">
+              {/* Main Content */}
+              <div className="z-10 min-h-[350px] min-w-[400px] rounded-md border border-black bg-stone-900 px-2 py-4">
+                {Header()}
+                <div className="flex gap-2 border-b border-slate-600">
+                  <button
+                    className={`py-2 ${
+                      currPage === "login" ? selectedClass : ""
+                    }`}
+                    onClick={() => setCurrPage("login")}
+                  >
+                    Log In
+                  </button>
+                  <button
+                    className={`py-2 ${
+                      currPage === "register" ? selectedClass : ""
+                    }`}
+                    onClick={() => setCurrPage("register")}
+                  >
+                    Sign Up
+                  </button>
+                </div>
+                {Content()}
+              </div>
               <button
-                className={`py-2 ${currPage === "login" ? selectedClass : ""}`}
-                onClick={() => setCurrPage("login")}
+                onClick={() => setOpen({ starterPage: "login", isOpen: false })}
+                className="rounded-md px-4 py-2 hover:bg-slate-500"
               >
-                Log In
-              </button>
-              <button
-                className={`py-2 ${
-                  currPage === "register" ? selectedClass : ""
-                }`}
-                onClick={() => setCurrPage("register")}
-              >
-                Sign Up
+                X
               </button>
             </div>
-            {Content()}
           </div>
-          <button
-            onClick={() => setOpen({ starterPage: "login", isOpen: false })}
-            className="rounded-md px-4 py-2 hover:bg-slate-500"
-          >
-            X
-          </button>
-        </div>
-      </div>
-    </>,
-    document.getElementById("portal")!
-  );
+        </>,
+        portal
+      )
+    : null;
 };
