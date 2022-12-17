@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDom from "react-dom";
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { signIn } from "next-auth/react";
-import { ModalProps } from "../header";
+import type { ModalProps } from "../header";
 import { trpc } from "../../utils/trpc";
 
 interface LoginErrors {
@@ -196,8 +196,8 @@ export const LoginModal = ({
 
   return ReactDom.createPortal(
     <>
-      <div className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center bg-slate-400/40">
-        <div className="flex items-start gap-2">
+      <div className="absolute top-0 left-0 z-[250] flex h-full w-full items-center justify-center bg-slate-400/40">
+        <div className=" flex items-start gap-2">
           {/* Main Content */}
           <div className="z-10 min-h-[350px] min-w-[400px] rounded-md border border-black bg-stone-900 px-2 py-4">
             {Header()}

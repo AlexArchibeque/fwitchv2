@@ -27,7 +27,6 @@ export const IndividualSection = ({
     );
   };
 
-  // h-[300px] w-[750px]
   return (
     <div
       className={`${classes} absolute flex h-[300px] min-w-[750px] flex-row  rounded-md bg-indigo-800 drop-shadow-lg`}

@@ -21,14 +21,14 @@ const exampleInfo: Array<VideoInfo> = [
   { name: "thereWego!", id: 6 },
 ];
 
-let hiddenLeft =
+const hiddenLeft =
   " -translate-x-[350px] h-[150px] transition-all ease-in duration-[0.5s] animate-fade opacity-0";
-let backLeft = `z-10 -translate-x-[250px] h-[210px]  transition-all ease-in duration-[0.5s] animate-fade opacity-100`;
-let midLeft = `z-20 -translate-x-[150px] h-[255px] w-[650px] transition-all ease-in  duration-[0.5s]`;
-let middle = "z-30 transition-all h-[300px] ease-in duration-[0.5s]";
-let midRight = `z-20 translate-x-[150px] h-[255px] w-[650px] transition-all ease-out duration-[0.5s]`;
-let backRight = `z-10 translate-x-[250px] h-[210px] transition-all ease-out duration-[0.5s] animate-fade opacity-100`;
-let hiddenRight =
+const backLeft = `z-10 -translate-x-[250px] h-[210px]  transition-all ease-in duration-[0.5s] animate-fade opacity-100`;
+const midLeft = `z-20 -translate-x-[150px] h-[255px] w-[650px] transition-all ease-in  duration-[0.5s]`;
+const middle = "z-30 transition-all h-[300px] ease-in duration-[0.5s]";
+const midRight = `z-20 translate-x-[150px] h-[255px] w-[650px] transition-all ease-out duration-[0.5s]`;
+const backRight = `z-10 translate-x-[250px] h-[210px] transition-all ease-out duration-[0.5s] animate-fade opacity-100`;
+const hiddenRight =
   " translate-x-[350px] h-[150px] transition-all ease-in duration-[0.5s] animate-fade opacity-0";
 
 const defaultStylesInfo: ArrayInfo[] = [
