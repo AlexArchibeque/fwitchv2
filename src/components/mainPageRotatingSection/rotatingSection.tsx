@@ -80,16 +80,16 @@ export const RotatingSection = () => {
       className="mt-[25px] flex min-w-full items-center"
       id="carousel-container"
     >
-      <div className="relative flex min-h-[450px] min-w-full items-center justify-between bg-red-700">
+      <div className="relative flex min-h-[450px] min-w-full items-center justify-between">
         <button
           onClick={() => {
             handleArrowClick("left");
           }}
-          className="z-40 h-10 bg-slate-700"
+          className="z-40 m-10 flex h-10 w-10 items-center justify-center rounded-md text-lg font-bold hover:bg-slate-500"
         >
           {`${"<"}`}
         </button>
-        <div className="absolute flex min-h-full min-w-full items-center justify-center overflow-x-clip bg-indigo-500">
+        <div className="absolute flex min-h-full min-w-full items-center justify-center overflow-x-clip">
           {arrayOfVids.map((info, idx) => {
             const id = info.id;
             const stylesInfo = defaultStylesInfo[id];
@@ -110,7 +110,7 @@ export const RotatingSection = () => {
           onClick={() => {
             handleArrowClick("right");
           }}
-          className="z-40 h-10 bg-slate-700"
+          className="z-40 m-10 flex h-10 w-10 items-center justify-center rounded-md text-lg font-bold hover:bg-slate-500"
         >
           {`${">"}`}
         </button>
