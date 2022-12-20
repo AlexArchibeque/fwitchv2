@@ -118,29 +118,3 @@ export const RotatingSection = () => {
     </div>
   );
 };
-
-// 637.5 255
-// 535.5 210
-
-// translate-x-0 translate-y-0 translate-z-0
-
-//translate3d(tx, ty, tz)
-// .slider-item-front {
-//   transform:translate3d(0px,0px,0px);
-// }
-
-// .slider-item-left {
-//   transform:translate3d(-40%,0px,-100px);
-// }
-
-// .slider-item-back-left {
-//   transform:translate3d(-70%,0px,-200px);
-// }
-
-// .slider-item-right {
-//   transform:translate3d(40%, 0px, -100px);
-// }
-
-// .slider-item-back-right {
-//   transform: translate3d(70%, 0px, -200px);
-// }
