@@ -42,8 +42,10 @@ const defaultStylesInfo: ArrayInfo[] = [
 ];
 
 export const RotatingSection = () => {
-  const [arrayOfVids, setArrayOfVids] =
-    React.useState<Array<VideoInfo>>(exampleInfo);
+  const arrayOfVids = exampleInfo; 
+  
+  // [arrayOfVids, setArrayOfVids] =
+  //   React.useState<Array<VideoInfo>>(exampleInfo);
 
   const [update, setUpdate] = React.useState<boolean>(false);
 

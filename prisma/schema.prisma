@@ -44,6 +44,7 @@ model Session {
 model User {
   id            String    @id @default(cuid())
   name          String?
+  // Added in for unique channel/login name
   userName      String?   @unique
   email         String?   @unique
   emailVerified DateTime?
@@ -51,6 +52,8 @@ model User {
   password      String?
   accounts      Account[]
   sessions      Session[]
+  channelId     String?   @unique
+  channel       Channel?  @relation(fields: [channelId], references: [id])
 }
 
 model VerificationToken {
@@ -61,7 +64,24 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-// End of Next Auth
+// Twitch stuff
+
+model Channel {
+  id          String   @id @default(cuid())
+  description String
+  user        User?
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  image       String
+  description String?
+  channels    Channel[]
+}
+
+// Guestbook stuff
 
 model Guestbook {
   id        String   @id @default(cuid())
