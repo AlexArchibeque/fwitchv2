@@ -8,6 +8,11 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 
+## Not a part of the stack but added in
+
+- [Next-Cloudinary](https://next-cloudinary.spacejelly.dev/)
+- [Bcrypt](https://www.npmjs.com/package/bcrypt)
+
 ## Ignore this for now :)
 
 Common commands:
