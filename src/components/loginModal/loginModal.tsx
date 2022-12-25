@@ -50,7 +50,7 @@ export const LoginModal = ({
       });
     },
 
-    onError: (error) => {
+    onError: (error: any) => {
       setRegistrationErrors(error.message);
     },
   });

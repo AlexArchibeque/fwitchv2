@@ -24,7 +24,7 @@ const exampleInfo: Array<VideoInfo> = [
 const hiddenLeft =
   " -translate-x-[350px] h-[150px] transition-all ease-in duration-[0.5s] animate-fade opacity-0";
 const backLeft = `z-10 -translate-x-[250px] h-[210px]  transition-all ease-in duration-[0.5s] animate-fade opacity-100`;
-const midLeft = `z-20 -translate-x-[150px] h-[255px] w-[650px] transition-all ease-in  duration-[0.5s]`;
+const midLeft = `z-20 -translate-x-[150px] h-[255px] w-[650px] transition-all ease-in duration-[0.5s]`;
 const middle = "z-30 transition-all h-[300px] ease-in duration-[0.5s]";
 const midRight = `z-20 translate-x-[150px] h-[255px] w-[650px] transition-all ease-out duration-[0.5s]`;
 const backRight = `z-10 translate-x-[250px] h-[210px] transition-all ease-out duration-[0.5s] animate-fade opacity-100`;
@@ -42,8 +42,8 @@ const defaultStylesInfo: ArrayInfo[] = [
 ];
 
 export const RotatingSection = () => {
-  const arrayOfVids = exampleInfo; 
-  
+  const arrayOfVids = exampleInfo;
+
   // [arrayOfVids, setArrayOfVids] =
   //   React.useState<Array<VideoInfo>>(exampleInfo);
 
