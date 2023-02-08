@@ -44,13 +44,12 @@ const defaultStylesInfo: ArrayInfo[] = [
 export const RotatingSection = () => {
   const arrayOfVids = exampleInfo;
 
-  // [arrayOfVids, setArrayOfVids] =
-  //   React.useState<Array<VideoInfo>>(exampleInfo);
-
-  const [update, setUpdate] = React.useState<boolean>(false);
+  const [leftClickable, setLeftClickable] = React.useState(true);
+  const [rightClickable, setRightClickable] = React.useState(true);
+  const MAX_CLICK_SPEED = 400;
 
   const handleArrowClick = (direction: string) => {
-    if (direction === "left") {
+    if (direction === "left" && leftClickable) {
       for (let i = arrayOfVids.length; i >= -1; i--) {
         const currVid = arrayOfVids[i];
         if (!currVid) continue;
@@ -61,7 +60,9 @@ export const RotatingSection = () => {
           currVid.id = currId - 1;
         }
       }
-    } else {
+      setLeftClickable(false);
+      setTimeout(() => setLeftClickable(true), MAX_CLICK_SPEED);
+    } else if (direction === "right" && rightClickable) {
       for (let i = 0; i < arrayOfVids.length; i++) {
         const currVid = arrayOfVids[i];
         if (!currVid) continue;
@@ -72,9 +73,9 @@ export const RotatingSection = () => {
           currVid.id = (currId + 1) % 7;
         }
       }
+      setRightClickable(false);
+      setTimeout(() => setRightClickable(true), MAX_CLICK_SPEED);
     }
-
-    setUpdate(!update);
   };
 
   return (

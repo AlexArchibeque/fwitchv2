@@ -5,15 +5,14 @@ import { trpc } from "../../utils/trpc";
 
 const ChannelPage: NextPage = () => {
   const router = useRouter();
-  const { username } = router.query;
+  let { username } = router.query;
 
+  username = typeof username === "string" ? username : "";
   const { data: user, isLoading } = trpc.user.getUserAndChannelInfo.useQuery(
     {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       username,
     },
-    { enabled: username !== "" && typeof username === "string" }
+    { enabled: username !== "" }
   );
 
   if (isLoading) {
