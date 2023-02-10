@@ -1,5 +1,6 @@
 import React from "react";
 import { IndividualSection } from "./individualSection";
+import { type User } from "@prisma/client";
 
 type ArrayInfo = {
   cssStyles: string;
@@ -9,17 +10,9 @@ type ArrayInfo = {
 type VideoInfo = {
   name: string;
   id: number;
+  description: string;
+  image: string;
 };
-
-const exampleInfo: Array<VideoInfo> = [
-  { name: "Nope!", id: 0 },
-  { name: "Hello!", id: 1 },
-  { name: "nopers", id: 2 },
-  { name: "nsl;akdf;o1", id: 3 },
-  { name: "There we go", id: 4 },
-  { name: "Larry", id: 5 },
-  { name: "thereWego!", id: 6 },
-];
 
 const hiddenLeft =
   " -translate-x-[350px] h-[150px] transition-all ease-in duration-[0.5s] animate-fade opacity-0";
@@ -41,12 +34,55 @@ const defaultStylesInfo: ArrayInfo[] = [
   { cssStyles: hiddenRight, hiddenInfo: true },
 ];
 
-export const RotatingSection = () => {
-  const arrayOfVids = exampleInfo;
+type InnerUser = {
+  image: string | null;
+  name: string | null;
+  userName: string | null;
+  channel: {
+    description: string;
+    category: {
+      image: string;
+      title: string;
+    };
+  } | null;
+};
 
+const formatInfo = (
+  arrayOfUsers: InnerUser[] | undefined
+): Array<VideoInfo> => {
+  const array = [];
+  if (arrayOfUsers) {
+    for (let i = 0; i < arrayOfUsers.length; i++) {
+      const currentUser = arrayOfUsers[i];
+      console.log("currentUserInfo:", currentUser);
+      array.push({
+        image: currentUser?.image || "",
+        name: currentUser?.name || "",
+        description: currentUser?.channel?.description || "",
+        id: i,
+      });
+    }
+  }
+  return array;
+};
+
+export const RotatingSection = ({
+  isLoading,
+  users,
+}: {
+  isLoading: boolean;
+  users: InnerUser[] | undefined;
+}) => {
+  const [arrayOfVids, setArrayOfVids] = React.useState([])<Array<VideoInfo>>;
   const [leftClickable, setLeftClickable] = React.useState(true);
   const [rightClickable, setRightClickable] = React.useState(true);
   const MAX_CLICK_SPEED = 400;
+
+  React.useEffect(() => {
+    if (!isLoading) {
+      setArrayOfVids(formatInfo(users));
+    }
+  }, [isLoading]);
 
   const handleArrowClick = (direction: string) => {
     if (direction === "left" && leftClickable) {
@@ -93,21 +129,22 @@ export const RotatingSection = () => {
           {`${"<"}`}
         </button>
         <div className="absolute flex min-h-full min-w-full items-center justify-center overflow-x-clip">
-          {arrayOfVids.map((info, idx) => {
-            const id = info.id;
-            const stylesInfo = defaultStylesInfo[id];
-            if (stylesInfo != undefined && info != null) {
-              return (
-                <IndividualSection
-                  key={`${idx}+${info.name}`}
-                  name={info.name}
-                  hiddenInfo={stylesInfo.hiddenInfo}
-                  classes={stylesInfo.cssStyles}
-                />
-              );
-            }
-            return null;
-          })}
+          {arrayOfVids.length > 0 &&
+            arrayOfVids.map((info, idx) => {
+              const id = info.id;
+              const stylesInfo = defaultStylesInfo[id];
+              if (stylesInfo != undefined && info != null) {
+                return (
+                  <IndividualSection
+                    key={`${idx}+${info.name}`}
+                    name={info.name}
+                    hiddenInfo={stylesInfo.hiddenInfo}
+                    classes={stylesInfo.cssStyles}
+                  />
+                );
+              }
+              return null;
+            })}
         </div>
         <button
           onClick={() => {
